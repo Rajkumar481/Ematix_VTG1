@@ -69,6 +69,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CalendarDays } from "lucide-react";
 import customFetch from "../utils/customFetch";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -184,6 +185,7 @@ const Dashboard = () => {
       nextVisitDate: null,
       startDate: null,
       endDate: null,
+      diagnosis:"",
     };
     setFilters(clearedFilters);
 
@@ -313,7 +315,7 @@ const Dashboard = () => {
       navigate("/details", { state: { detailsId: details[0]._id } });
     } else {
       // Handle case where no details found
-      alert("No details found for this patient.");
+     toast.error("No details found for this patient.");
     }
   };
   return (
@@ -716,7 +718,7 @@ const Dashboard = () => {
                                     }}
                                   />
                                   <input
-                                    type="text"
+                                    type="number"
                                     value={filters.phone}
                                     onChange={(e) =>
                                       handleFilterChange(
@@ -1047,7 +1049,7 @@ const Dashboard = () => {
                                   </Button> */}
                                   <Button
                                     onClick={() =>
-                                      navigate("/details", {
+                                      navigate("/dashboard/details", {
                                         state: {
                                           patientId: patient?.patient?._id,
                                         },
@@ -1058,7 +1060,7 @@ const Dashboard = () => {
                                   </Button>
                                   <Button
                                     onClick={() =>
-                                      navigate("/upload", {
+                                      navigate("/dashboard/upload", {
                                         state: { patient: patient?.patient },
                                       })
                                     }

@@ -720,7 +720,7 @@ const PatientStatusSummary = () => {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate("/upload", {
+                            navigate("/dashboard/upload", {
                               state: { patient: item.patient },
                             });
                           }}

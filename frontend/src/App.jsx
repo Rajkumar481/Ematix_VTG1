@@ -21,6 +21,7 @@ import PatientImageDetails from "./components/PatientImageDetails.jsx";
 import BackupDeleteCards from "./pages/Backup.jsx";
 import PatientStatusSummary from "./pages/Status.jsx";
 import EditPatient from "./pages/EditPatient.jsx";
+import HomeLayout from "./pages/HomeLayout.jsx";
 
 // Custom 404 Page
 const ErrorPage = () => (
@@ -32,27 +33,35 @@ const ErrorPage = () => (
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/login",
-      element: <Login />,
-    },
-    {
       path: "/",
-      element: <Layout />,
-      errorElement: <ErrorPage />,
-      children: [
-        { index: true, element: <Dashboard /> },
-        { path: "addpatient", element: <Addpatient /> },
-        { path: "details", element: <PatientDetailsList /> },
-        { path: "patientlist", element: <PatientList /> },
-        { path: "details/:id", element: <PatientImageDetails /> },
-        { path: "upload", element: <AddPatientDetails /> },
-        { path: "backup", element: <BackupDeleteCards /> },
-        { path: "status", element: <PatientStatusSummary /> },
-        { path: "edit", element: <EditPatient /> },
+      element: <HomeLayout />,
+      children: [{
+        index: true,
+        element: <Login />,
+      },
+      {
+        path: "/dashboard",
+        element: <Layout />,
+        errorElement: <ErrorPage />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: "addpatient", element: <Addpatient /> },
+          { path: "details", element: <PatientDetailsList /> },
+          { path: "patientlist", element: <PatientList /> },
+          { path: "details/:id", element: <PatientImageDetails /> },
+          { path: "upload", element: <AddPatientDetails /> },
+          { path: "backup", element: <BackupDeleteCards /> },
+          { path: "status", element: <PatientStatusSummary /> },
+          { path: "edit", element: <EditPatient /> },
+          { path: "*", element: <ErrorPage /> },
+        ],
+      },
+      ]
+    }
 
-        { path: "*", element: <ErrorPage /> },
-      ],
-    },
+
+
+
   ]);
 
   return (

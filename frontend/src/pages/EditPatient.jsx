@@ -89,7 +89,7 @@ const EditPatient = () => {
     try {
       await customFetch.put(`patients/${patient._id}`, payload);
       toast.success("Patient updated successfully!");
-      navigate("/patientlist");
+      navigate("/dashboard/patientlist");
     } catch (err) {
       console.error(err);
       toast.error("Update failed.");

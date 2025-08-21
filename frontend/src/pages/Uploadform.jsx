@@ -245,6 +245,7 @@ const AddPatientDetails = () => {
 
       <TextField
         fullWidth
+        type="number"
         label="Total Bilirubin"
         name="totalBilirubin"
         value={formData.totalBilirubin}
@@ -253,6 +254,7 @@ const AddPatientDetails = () => {
       />
       <TextField
         fullWidth
+         type="number"
         label="SGPT"
         name="SGPT"
         value={formData.SGPT}
@@ -261,6 +263,7 @@ const AddPatientDetails = () => {
       />
       <TextField
         fullWidth
+         type="number"
         label="SGOT"
         name="SGOT"
         value={formData.SGOT}

@@ -473,6 +473,7 @@ import {
   Typography,
 } from "@mui/material";
 import customFetch from "../utils/customFetch";
+import { toast } from "react-toastify";
 
 const initialTreatmentState = {
   treatmentName: "",
@@ -533,14 +534,14 @@ export default function PatientList() {
   };
 
   const handleDelete = async (_id) => {
-    if (window.confirm("Are you sure to delete?")) {
       try {
         await customFetch.delete(`/patients/${_id}`);
+        toast.success("Delete Successfully")
         fetchPatients();
       } catch (err) {
+        toast.error("Error deleting patient")
         console.error("Error deleting patient:", err);
       }
-    }
   };
 
   const openTreatmentModal = (patientId) => {
@@ -586,7 +587,7 @@ export default function PatientList() {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      alert("Treatment added!");
+      toast.success("Treatment added!");
       closeTreatmentModal();
       fetchPatients();
     } catch (err) {
@@ -675,7 +676,7 @@ export default function PatientList() {
             size="small"
           />
           <TextField
-            type="text"
+            type="number"
             name="phone"
             value={filters.phone}
             onChange={handleFilterChange}
@@ -757,7 +758,7 @@ export default function PatientList() {
                       },
                     }}
                     onClick={() =>
-                      navigate("/details", { state: { patientId: p._id } })
+                      navigate("/dashboard/details", { state: { patientId: p._id } })
                     }
                   >
                     <TableCell component="th" scope="row">
@@ -789,7 +790,7 @@ export default function PatientList() {
                           color: "white",
                         }}
                         onClick={() =>
-                          navigate("/upload", { state: { patient: p } })
+                          navigate("/dashboard/upload", { state: { patient: p } })
                         }
                       >
                         Add Treatment
@@ -815,7 +816,7 @@ export default function PatientList() {
                             color: "white",
                           }}
                           onClick={() =>
-                            navigate("/edit", { state: { patient: p } })
+                            navigate("/dashboard/edit", { state: { patient: p } })
                           }
                         >
                           Edit

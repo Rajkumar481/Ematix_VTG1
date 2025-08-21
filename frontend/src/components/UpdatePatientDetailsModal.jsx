@@ -51,7 +51,7 @@ const UpdatePatientDetailsModal = ({ open, handleClose, detail, refresh }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
-  
+
   const [formData, setFormData] = useState({
     startDate: "",
     medicineTakenPatient: "",
@@ -212,34 +212,34 @@ const UpdatePatientDetailsModal = ({ open, handleClose, detail, refresh }) => {
     setError(null);
 
     try {
-  const formDataToSend = new FormData();
-  formDataToSend.append("patient", detail.patient._id);
+      const formDataToSend = new FormData();
+      formDataToSend.append("patient", detail.patient._id);
 
-  Object.entries(formData).forEach(([key, value]) => {
-    formDataToSend.append(key, value);
-  });
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
 
-  newImages.forEach((file) => {
-    formDataToSend.append("images", file);
-  });
+      newImages.forEach((file) => {
+        formDataToSend.append("images", file);
+      });
 
-  const response = await customFetch.patch(
-    `/details/${detail._id}`,
-    formDataToSend,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      const response = await customFetch.patch(
+        `/details/${detail._id}`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setSuccess(true);
+      setTimeout(() => {
+        refresh();
+        handleClose();
+      }, 1500);
     }
-  );
-
-  setSuccess(true);
-  setTimeout(() => {
-    refresh();
-    handleClose();
-  }, 1500);
-} 
-catch (err) {
+    catch (err) {
       console.error(err);
       setError("Failed to update patient details. Please try again.");
     } finally {
@@ -319,7 +319,7 @@ catch (err) {
               <Typography
                 variant={isMobile ? "h5" : "h4"}
                 fontWeight="bold"
-                sx={{ 
+                sx={{
                   textShadow: "0 2px 4px rgba(0,0,0,0.3)",
                   fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' },
                   lineHeight: { xs: 1.2, sm: 1.3 },
@@ -330,10 +330,10 @@ catch (err) {
               >
                 Edit Patient Details
               </Typography>
-              <Typography 
-                variant="subtitle1" 
-                sx={{ 
-                  opacity: 0.9, 
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  opacity: 0.9,
                   mt: 0.5,
                   fontSize: { xs: '0.875rem', sm: '1rem' },
                   display: { xs: 'none', sm: 'block' }
@@ -397,16 +397,16 @@ catch (err) {
                       <Person sx={{ fontSize: { xs: 20, sm: 24 } }} />
                     </Avatar>
                     <Box>
-                      <Typography 
-                        variant="h6" 
+                      <Typography
+                        variant="h6"
                         fontWeight="bold"
                         sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
                       >
                         Patient Information
                       </Typography>
-                      <Typography 
-                        variant="body2" 
-                        sx={{ 
+                      <Typography
+                        variant="body2"
+                        sx={{
                           opacity: 0.9,
                           fontSize: { xs: '0.75rem', sm: '0.875rem' },
                           display: { xs: 'none', sm: 'block' }
@@ -540,16 +540,16 @@ catch (err) {
                       <Medication sx={{ fontSize: { xs: 20, sm: 24 } }} />
                     </Avatar>
                     <Box>
-                      <Typography 
-                        variant="h6" 
+                      <Typography
+                        variant="h6"
                         fontWeight="bold"
                         sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
                       >
                         Medication Details
                       </Typography>
-                      <Typography 
-                        variant="body2" 
-                        sx={{ 
+                      <Typography
+                        variant="body2"
+                        sx={{
                           opacity: 0.9,
                           fontSize: { xs: '0.75rem', sm: '0.875rem' },
                           display: { xs: 'none', sm: 'block' }
@@ -564,26 +564,33 @@ catch (err) {
                     <Grid container spacing={{ xs: 2, sm: 3 }}>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          label="Medicine Taken by Patient"
+                          label="Medicine Dosage (mg)"
                           name="medicineTakenPatient"
                           fullWidth
-                          multiline
-                          rows={3}
+                          type="number"
                           value={formData.medicineTakenPatient}
                           onChange={handleChange}
                           error={!!fieldErrors.medicineTakenPatient}
                           helperText={fieldErrors.medicineTakenPatient}
-                          placeholder="List all current medications with dosage"
+                          placeholder="Enter dosage in mg"
                           sx={{
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 2,
                               bgcolor: "white",
+                              display: "flex",
+                              alignItems: "flex-start", 
+                              height: 50,     
+                              "& input": {
+                                height: "60%",     
+                                padding: "10px",
+                              },
                               "&:hover": {
                                 boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                               },
                             },
                           }}
                         />
+
                       </Grid>
 
                       <Grid item xs={12} md={6}>
@@ -591,6 +598,7 @@ catch (err) {
                           label="Primary Medicine Name"
                           name="medicineName"
                           fullWidth
+                          type="number"
                           value={formData.medicineName}
                           onChange={handleChange}
                           placeholder="Main prescribed medication"
@@ -645,16 +653,16 @@ catch (err) {
                       <Biotech sx={{ fontSize: { xs: 20, sm: 24 } }} />
                     </Avatar>
                     <Box>
-                      <Typography 
-                        variant="h6" 
+                      <Typography
+                        variant="h6"
                         fontWeight="bold"
                         sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
                       >
                         Laboratory Results
                       </Typography>
-                      <Typography 
-                        variant="body2" 
-                        sx={{ 
+                      <Typography
+                        variant="body2"
+                        sx={{
                           opacity: 0.9,
                           fontSize: { xs: '0.75rem', sm: '0.875rem' },
                           display: { xs: 'none', sm: 'block' }
@@ -803,16 +811,16 @@ catch (err) {
                       <PhotoCamera sx={{ fontSize: { xs: 20, sm: 24 } }} />
                     </Avatar>
                     <Box>
-                      <Typography 
-                        variant="h6" 
+                      <Typography
+                        variant="h6"
                         fontWeight="bold"
                         sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
                       >
                         Medical Images
                       </Typography>
-                      <Typography 
-                        variant="body2" 
-                        sx={{ 
+                      <Typography
+                        variant="body2"
+                        sx={{
                           opacity: 0.9,
                           fontSize: { xs: '0.75rem', sm: '0.875rem' },
                           display: { xs: 'none', sm: 'block' }
@@ -875,7 +883,7 @@ catch (err) {
                         variant="body1"
                         color="textSecondary"
                         gutterBottom
-                        sx={{ 
+                        sx={{
                           mb: 3,
                           fontSize: { xs: '0.875rem', sm: '1rem' },
                           px: { xs: 1, sm: 2 }
@@ -1075,8 +1083,8 @@ catch (err) {
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={2}
-          sx={{ 
-            width: "100%", 
+          sx={{
+            width: "100%",
             justifyContent: "flex-end",
             alignItems: { xs: "stretch", sm: "center" }
           }}

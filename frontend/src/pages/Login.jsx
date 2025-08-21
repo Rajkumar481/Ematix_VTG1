@@ -51,7 +51,7 @@ const Login = ({ onLogin }) => {
       const res = await customFetch.post("/auth/login", { name, password });
       toast.success("Login successful");
       if (onLogin) onLogin();
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       toast.error(
         err.response?.data?.msg ||

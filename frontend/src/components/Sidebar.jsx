@@ -36,27 +36,27 @@ const drawerWidth = 300;
 const navigationItems = [
   {
     title: "Dashboard",
-    path: "/",
+    path: "/dashboard",
     icon: DashboardIcon,
   },
   {
     title: "Add Patient",
-    path: "/addpatient",
+    path: "/dashboard/addpatient",
     icon: PersonAddIcon,
   },
   {
     title: "Patient List",
-    path: "/patientlist",
+    path: "/dashboard/patientlist",
     icon: PeopleIcon,
   },
   {
     title: "Status",
-    path: "/status",
+    path: "/dashboard/status",
     icon: AssessmentIcon,
   },
   {
     title: "Settings",
-    path: "/backup",
+    path: "/dashboard/backup",
     icon: SettingsIcon,
   },
 ];
@@ -80,7 +80,7 @@ export default function MedicalSidebar({ children }) {
   const handleLogout = async () => {
     await customFetch.get("/auth/logout");
     toast.success("Logged out successfully");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const drawer = (
@@ -129,17 +129,6 @@ export default function MedicalSidebar({ children }) {
           },
         }}
       >
-        {/* <Box
-          sx={{
-            position: "relative",
-            p: 1,
-            borderRadius: "16px",
-            background: "rgba(255,255,255,0.15)",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255,255,255,0.2)",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          }}
-        > */}
         <img
           src={logo || "/placeholder.svg"}
           alt="VTG Logo"
@@ -150,7 +139,6 @@ export default function MedicalSidebar({ children }) {
             borderRadius: "12px",
           }}
         />
-        {/* </Box> */}
         <Box>
           <Typography
             variant="h4"
@@ -191,6 +179,7 @@ export default function MedicalSidebar({ children }) {
           display: "flex",
           flexDirection: "column",
           position: "relative",
+          overflowY: "auto", // ✅ make scrollable if content too tall
           "&::before": {
             content: '""',
             position: "absolute",
@@ -308,7 +297,7 @@ export default function MedicalSidebar({ children }) {
         />
 
         {/* Logout Section - Enhanced */}
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 3, flexShrink: 0 }}> {/* ✅ prevent shrinking/hiding */}
           <ListItemButton
             onClick={() => {
               handleLogout();
@@ -356,6 +345,23 @@ export default function MedicalSidebar({ children }) {
               }}
             />
           </ListItemButton>
+
+           <Typography
+            variant="caption"
+            sx={{
+              display: "block",
+              textAlign: "center",
+              color: "#0f766e",
+              fontSize: "0.85rem",
+              lineHeight: 1.4,
+              marginTop:"20px"
+            }}
+          >
+            VTG HERBALS. All Rights Reserved.
+            <br />
+            Powered by Ematix Embedded and Software Solution Inc @2025
+          </Typography>
+
         </Box>
       </Box>
     </Box>

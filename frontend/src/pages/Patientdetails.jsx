@@ -96,6 +96,8 @@ const PatientDetailsDashboard = () => {
     const fetchPatientDetails = async () => {
       try {
         const res = await customFetch.get(`/details/bypatient/${patientId}`);
+        console.log(res.data);
+        
         await new Promise((resolve) => setTimeout(resolve, 1500));
         setDetails(res.data);
       } catch (err) {
@@ -174,12 +176,14 @@ const PatientDetailsDashboard = () => {
   };
 
   const filteredDetails = useMemo(() => {
+    
     return details.filter((detail) => {
+      console.log(detail.medicineName);
       const matchesSearch =
         detail?.patient?.name
           ?.toLowerCase()
           .includes(searchTerm.toLowerCase()) ||
-        detail?.medicineTakenPatient
+        detail?.medicineName
           ?.toLowerCase()
           .includes(searchTerm.toLowerCase());
 
@@ -495,6 +499,14 @@ const PatientDetailsDashboard = () => {
                         </Typography>
                       </Box>
 
+                      <Box display="flex" alignItems="center" gap={1.5} mb={2}>
+                        <EventAvailable fontSize="small" color="action" />
+                        <Typography variant="body2">
+                          <strong>Medicine Name:</strong>{" "}
+                          {(detail.medicineName)}
+                        </Typography>
+                      </Box>
+
                       <Box
                         display="flex"
                         alignItems="flex-start"
@@ -613,7 +625,7 @@ const PatientDetailsDashboard = () => {
                         fontWeight: 500,
                         "&:hover": { textDecoration: "underline" },
                       }}
-                      onClick={() => navigate(`/details/${detail._id}`)}
+                      onClick={() => navigate(`/dashboard/details/${detail._id}`)}
                     >
                       View Details
                     </Typography>
